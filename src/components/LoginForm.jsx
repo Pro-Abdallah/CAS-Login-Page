@@ -2,6 +2,7 @@ import { useState, useEffect, useId } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
 import { EyeIcon, EyeOffIcon, SpinnerIcon, CheckIcon, AlertIcon } from './Icons'
+import logoImg from '../assets/elsewedy-logo.png'
 
 const LS_REMEMBER_KEY = 'cas_remembered_user'
 
@@ -465,31 +466,18 @@ export default function LoginForm() {
             alignItems: 'center',
             gap: '10px',
             marginBottom: '28px',
+            background: '#FFFFFF',
+            border: isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.08)',
+            borderRadius: '12px',
+            padding: '10px 18px',
+            boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.3)' : '0 4px 16px rgba(0,0,0,0.06)',
           }}
         >
-          <div
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '10px',
-              background: '#C8102E',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '20px',
-              fontWeight: 800,
-              color: 'white',
-              flexShrink: 0,
-              boxShadow: '0 4px 12px rgba(200,16,46,0.3)',
-            }}
-          >
-            E
-          </div>
-          <div>
-            <span style={{ color: 'var(--text-primary)', fontSize: '14px', fontWeight: 700 }}>
-              Elsewedy Electrometer
-            </span>
-          </div>
+          <img
+            src={logoImg}
+            alt="Elsewedy Electrometer"
+            style={{ height: '32px', width: 'auto', display: 'block' }}
+          />
         </div>
 
         <h2

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import logoImg from '../assets/elsewedy-logo.png'
 
 const panelVariants = {
   hidden: { x: -40, opacity: 0 },
@@ -111,37 +112,18 @@ export default function BrandPanel() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '12px',
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(200,16,46,0.2)',
+            background: '#FFFFFF',
+            border: '1px solid rgba(255,255,255,0.1)',
             borderRadius: '12px',
-            padding: '10px 16px 10px 12px',
+            padding: '10px 18px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
           }}
         >
-          <div
-            style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '8px',
-              background: '#C8102E',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '18px',
-              fontWeight: 800,
-              color: 'white',
-              flexShrink: 0,
-            }}
-          >
-            E
-          </div>
-          <div>
-            <div style={{ color: 'white', fontSize: '14px', fontWeight: 700, lineHeight: 1.2 }}>
-              Elsewedy Electrometer
-            </div>
-            <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '11px', fontWeight: 500, marginTop: '2px' }}>
-              CAS Portal
-            </div>
-          </div>
+          <img
+            src={logoImg}
+            alt="Elsewedy Electrometer"
+            style={{ height: '32px', width: 'auto', display: 'block' }}
+          />
         </div>
       </div>
 

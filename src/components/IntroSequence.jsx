@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import logoImg from '../assets/elsewedy-logo.png'
 
 export default function IntroSequence({ onComplete, duration = 3000 }) {
   const timerRef = useRef(null)
@@ -66,7 +67,7 @@ export default function IntroSequence({ onComplete, duration = 3000 }) {
           gap: '12px',
         }}
       >
-        <LogoPlaceholder size={64} animated />
+        <LogoPlaceholder animated />
         <span
           style={{
             color: 'rgba(255,255,255,0.3)',
@@ -137,27 +138,27 @@ export default function IntroSequence({ onComplete, duration = 3000 }) {
   )
 }
 
-function LogoPlaceholder({ size = 48, animated = false }) {
+function LogoPlaceholder({ animated = false }) {
   return (
     <motion.div
-      animate={animated ? { scale: [1, 1.06, 1] } : {}}
+      animate={animated ? { scale: [1, 1.05, 1] } : {}}
       transition={animated ? { duration: 2, repeat: Infinity, ease: 'easeInOut' } : {}}
       style={{
-        width: size,
-        height: size,
-        borderRadius: '50%',
-        background: 'var(--brand-red)',
+        padding: '12px 20px',
+        borderRadius: '12px',
+        background: '#FFFFFF',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: size * 0.45,
-        fontWeight: 800,
-        color: 'white',
-        letterSpacing: '-0.02em',
         flexShrink: 0,
       }}
     >
-      E
+      <img
+        src={logoImg}
+        alt="Elsewedy Electrometer"
+        style={{ height: '36px', width: 'auto', display: 'block' }}
+      />
     </motion.div>
   )
 }
