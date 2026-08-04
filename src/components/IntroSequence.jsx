@@ -148,15 +148,18 @@ function LogoPlaceholder({ animated = false }) {
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
+        padding: '16px',
       }}
     >
       <img
         src={logoImg}
         alt="Elsewedy Electrometer"
         style={{
-          height: '68px',
+          height: '110px',
           width: 'auto',
+          maxWidth: '100%',
           display: 'block',
+          objectFit: 'contain',
           filter: 'brightness(1.6) contrast(1.1)',
         }}
       />

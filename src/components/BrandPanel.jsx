@@ -111,9 +111,11 @@ export default function BrandPanel() {
           src={logoImg}
           alt="Elsewedy Electrometer"
           style={{
-            height: '52px',
+            height: '80px',
             width: 'auto',
+            maxWidth: '100%',
             display: 'block',
+            objectFit: 'contain',
             filter: 'brightness(1.6) contrast(1.1)',
           }}
         />

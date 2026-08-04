@@ -465,9 +465,11 @@ export default function LoginForm() {
             src={logoImg}
             alt="Elsewedy Electrometer"
             style={{
-              height: '54px',
+              height: '76px',
               width: 'auto',
+              maxWidth: '100%',
               display: 'block',
+              objectFit: 'contain',
               filter: isDark ? 'brightness(1.6) contrast(1.1)' : 'none',
             }}
           />
