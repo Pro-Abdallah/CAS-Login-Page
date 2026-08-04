@@ -144,10 +144,6 @@ function LogoPlaceholder({ animated = false }) {
       animate={animated ? { scale: [1, 1.05, 1] } : {}}
       transition={animated ? { duration: 2, repeat: Infinity, ease: 'easeInOut' } : {}}
       style={{
-        padding: '12px 20px',
-        borderRadius: '12px',
-        background: '#FFFFFF',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -157,7 +153,12 @@ function LogoPlaceholder({ animated = false }) {
       <img
         src={logoImg}
         alt="Elsewedy Electrometer"
-        style={{ height: '36px', width: 'auto', display: 'block' }}
+        style={{
+          height: '68px',
+          width: 'auto',
+          display: 'block',
+          filter: 'brightness(1.6) contrast(1.1)',
+        }}
       />
     </motion.div>
   )

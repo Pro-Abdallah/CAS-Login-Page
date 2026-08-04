@@ -459,24 +459,17 @@ export default function LoginForm() {
         zIndex: 2,
       }}
     >
-      <div style={{ marginBottom: '36px' }}>
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '10px',
-            marginBottom: '28px',
-            background: '#FFFFFF',
-            border: isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.08)',
-            borderRadius: '12px',
-            padding: '10px 18px',
-            boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.3)' : '0 4px 16px rgba(0,0,0,0.06)',
-          }}
-        >
+      <div style={{ marginBottom: '32px' }}>
+        <div style={{ marginBottom: '24px' }}>
           <img
             src={logoImg}
             alt="Elsewedy Electrometer"
-            style={{ height: '32px', width: 'auto', display: 'block' }}
+            style={{
+              height: '54px',
+              width: 'auto',
+              display: 'block',
+              filter: isDark ? 'brightness(1.6) contrast(1.1)' : 'none',
+            }}
           />
         </div>
 

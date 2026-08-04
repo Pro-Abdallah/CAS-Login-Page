@@ -107,24 +107,16 @@ export default function BrandPanel() {
       <RedRing size={120} style={{ top: '20px', right: '20px', opacity: 0.25 }} />
 
       <div style={{ position: 'relative', zIndex: 2 }}>
-        <div
+        <img
+          src={logoImg}
+          alt="Elsewedy Electrometer"
           style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '12px',
-            background: '#FFFFFF',
-            border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: '12px',
-            padding: '10px 18px',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+            height: '52px',
+            width: 'auto',
+            display: 'block',
+            filter: 'brightness(1.6) contrast(1.1)',
           }}
-        >
-          <img
-            src={logoImg}
-            alt="Elsewedy Electrometer"
-            style={{ height: '32px', width: 'auto', display: 'block' }}
-          />
-        </div>
+        />
       </div>
 
       <div style={{ position: 'relative', zIndex: 2 }}>
