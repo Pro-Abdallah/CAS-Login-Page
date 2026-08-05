@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
 import { EyeIcon, EyeOffIcon, SpinnerIcon, CheckIcon, AlertIcon } from './Icons'
 import logoImg from '../assets/elsewedy-logo.png'
+import SuccessOverlay from './SuccessOverlay'
 
 const LS_REMEMBER_KEY = 'cas_remembered_user'
 
@@ -213,7 +214,6 @@ function PasswordField({ id, label, value, onChange, onBlur, error }) {
 }
 
 function CustomCheckbox({ id, checked, onChange, label }) {
-  const { isDark } = useTheme()
   return (
     <label
       htmlFor={id}
@@ -362,6 +362,19 @@ function Toast({ message, type, isDark }) {
   )
 }
 
+const itemExit = (i) => ({
+  opacity: 0,
+  x: 60 + i * 18,
+  y: 60 + i * 12,
+  scale: 0.85,
+  filter: 'blur(4px)',
+  transition: {
+    duration: 0.38,
+    delay: i * 0.065,
+    ease: [0.4, 0, 1, 1],
+  },
+})
+
 const formVariants = {
   hidden: { opacity: 0, y: 28 },
   visible: {
@@ -384,6 +397,7 @@ export default function LoginForm() {
   const [touched, setTouched] = useState({})
   const [submitting, setSubmitting] = useState(false)
   const [toast, setToast] = useState(null)
+  const [isSuccess, setIsSuccess] = useState(false)
 
   useEffect(() => {
     const saved = localStorage.getItem(LS_REMEMBER_KEY)
@@ -439,158 +453,171 @@ export default function LoginForm() {
     setSubmitting(false)
 
     if (email === 'admin@elsewedy.com' && password === 'password') {
-      setToast({ type: 'success', message: '✓ Signed in successfully! Redirecting…' })
+      setIsSuccess(true)
     } else {
       setToast({ type: 'error', message: 'Invalid credentials. Please try again.' })
+      setTimeout(() => setToast(null), 4000)
     }
-
-    setTimeout(() => setToast(null), 4000)
   }
 
   return (
-    <motion.div
-      variants={formVariants}
-      initial="hidden"
-      animate="visible"
-      style={{
-        width: '100%',
-        maxWidth: '420px',
-        position: 'relative',
-        zIndex: 2,
-      }}
-    >
-      <div style={{ marginBottom: '32px' }}>
-        <div style={{ marginBottom: '24px' }}>
-          <img
-            src={logoImg}
-            alt="Elsewedy Electrometer"
-            style={{
-              height: '76px',
-              width: 'auto',
-              maxWidth: '100%',
-              display: 'block',
-              objectFit: 'contain',
-              filter: isDark ? 'brightness(1.6) contrast(1.1)' : 'none',
-            }}
-          />
-        </div>
+    <>
+      <SuccessOverlay show={isSuccess} />
 
-        <h2
-          style={{
-            color: 'var(--text-primary)',
-            fontSize: 'clamp(26px, 4vw, 34px)',
-            fontWeight: 800,
-            letterSpacing: '-0.025em',
-            lineHeight: 1.15,
-            marginBottom: '8px',
-          }}
-        >
-          Welcome back
-        </h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '14px', fontWeight: 500, lineHeight: 1.6 }}>
-          Sign in to your Elsewedy Electrometer account to continue.
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-        <InputField
-          id={emailId}
-          label="Email or Username"
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          onBlur={() => handleBlur('email')}
-          error={errors.email}
-          autoComplete="username email"
-          placeholder="you@elsewedy.com"
-        />
-
-        <PasswordField
-          id={passwordId}
-          label="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          onBlur={() => handleBlur('password')}
-          error={errors.password}
-        />
-
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '8px',
-          }}
-        >
-          <CustomCheckbox
-            id={rememberMeId}
-            checked={rememberMe}
-            onChange={e => setRememberMe(e.target.checked)}
-            label="Remember me"
-          />
-
-          <a
-            href="#forgot-password"
-            id="forgot-password-link"
-            onClick={e => e.preventDefault()}
-            style={{
-              color: 'var(--brand-red)',
-              fontSize: '13px',
-              fontWeight: 600,
-              textDecoration: 'none',
-              opacity: 0.8,
-              transition: 'opacity 0.2s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}
-          >
-            Forgot password?
-          </a>
-        </div>
-
-        <AnimatePresence mode="wait">
-          {toast && <Toast key={toast.type} message={toast.message} type={toast.type} isDark={isDark} />}
-        </AnimatePresence>
-
-        <SubmitButton loading={submitting} disabled={false} />
-      </form>
-
-      <div
+      <motion.div
+        variants={formVariants}
+        initial="hidden"
+        animate="visible"
         style={{
-          marginTop: '28px',
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
+          width: '100%',
+          maxWidth: '420px',
+          position: 'relative',
+          zIndex: 2,
         }}
       >
-        <p style={{ color: 'var(--text-muted)', fontSize: '13px', fontWeight: 500 }}>
-          Don't have an account?{' '}
-          <a
-            href="#signup"
-            id="signup-link"
-            onClick={e => e.preventDefault()}
-            style={{
-              color: 'var(--brand-red)',
-              textDecoration: 'none',
-              fontWeight: 600,
-              opacity: 0.85,
-              transition: 'opacity 0.2s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '0.85'}
-          >
-            Request access
-          </a>
-        </p>
+        <motion.div
+          animate={isSuccess ? itemExit(0) : { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)' }}
+          style={{ marginBottom: '32px' }}
+        >
+          <div style={{ marginBottom: '24px' }}>
+            <img
+              src={logoImg}
+              alt="Elsewedy Electrometer"
+              style={{
+                height: '76px',
+                width: 'auto',
+                maxWidth: '100%',
+                display: 'block',
+                objectFit: 'contain',
+                filter: isDark ? 'brightness(1.6) contrast(1.1)' : 'none',
+              }}
+            />
+          </div>
 
-        <p style={{ color: 'var(--text-muted)', fontSize: '11px', fontWeight: 500, lineHeight: 1.6, opacity: 0.7 }}>
-          Demo:{' '}
-          <code style={{ color: 'var(--text-secondary)', fontFamily: 'monospace' }}>admin@elsewedy.com</code>
-          {' '}/ <code style={{ color: 'var(--text-secondary)', fontFamily: 'monospace' }}>password</code>
-        </p>
-      </div>
-    </motion.div>
+          <h2
+            style={{
+              color: 'var(--text-primary)',
+              fontSize: 'clamp(26px, 4vw, 34px)',
+              fontWeight: 800,
+              letterSpacing: '-0.025em',
+              lineHeight: 1.15,
+              marginBottom: '8px',
+            }}
+          >
+            Welcome back
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '14px', fontWeight: 500, lineHeight: 1.6 }}>
+            Sign in to your Elsewedy Electrometer account to continue.
+          </p>
+        </motion.div>
+
+        <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+          <motion.div animate={isSuccess ? itemExit(1) : { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)' }}>
+            <InputField
+              id={emailId}
+              label="Email or Username"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              onBlur={() => handleBlur('email')}
+              error={errors.email}
+              autoComplete="username email"
+              placeholder="you@elsewedy.com"
+            />
+          </motion.div>
+
+          <motion.div animate={isSuccess ? itemExit(2) : { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)' }}>
+            <PasswordField
+              id={passwordId}
+              label="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              onBlur={() => handleBlur('password')}
+              error={errors.password}
+            />
+          </motion.div>
+
+          <motion.div
+            animate={isSuccess ? itemExit(3) : { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)' }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '8px',
+            }}
+          >
+            <CustomCheckbox
+              id={rememberMeId}
+              checked={rememberMe}
+              onChange={e => setRememberMe(e.target.checked)}
+              label="Remember me"
+            />
+            <a
+              href="#forgot-password"
+              id="forgot-password-link"
+              onClick={e => e.preventDefault()}
+              style={{
+                color: 'var(--brand-red)',
+                fontSize: '13px',
+                fontWeight: 600,
+                textDecoration: 'none',
+                opacity: 0.8,
+                transition: 'opacity 0.2s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}
+            >
+              Forgot password?
+            </a>
+          </motion.div>
+
+          <AnimatePresence mode="wait">
+            {toast && <Toast key={toast.type} message={toast.message} type={toast.type} isDark={isDark} />}
+          </AnimatePresence>
+
+          <motion.div animate={isSuccess ? itemExit(4) : { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)' }}>
+            <SubmitButton loading={submitting} disabled={false} />
+          </motion.div>
+        </form>
+
+        <motion.div
+          animate={isSuccess ? itemExit(5) : { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)' }}
+          style={{
+            marginTop: '28px',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+          }}
+        >
+          <p style={{ color: 'var(--text-muted)', fontSize: '13px', fontWeight: 500 }}>
+            Don't have an account?{' '}
+            <a
+              href="#signup"
+              id="signup-link"
+              onClick={e => e.preventDefault()}
+              style={{
+                color: 'var(--brand-red)',
+                textDecoration: 'none',
+                fontWeight: 600,
+                opacity: 0.85,
+                transition: 'opacity 0.2s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '0.85'}
+            >
+              Request access
+            </a>
+          </p>
+
+          <p style={{ color: 'var(--text-muted)', fontSize: '11px', fontWeight: 500, lineHeight: 1.6, opacity: 0.7 }}>
+            Demo:{' '}
+            <code style={{ color: 'var(--text-secondary)', fontFamily: 'monospace' }}>admin@elsewedy.com</code>
+            {' '}/ <code style={{ color: 'var(--text-secondary)', fontFamily: 'monospace' }}>password</code>
+          </p>
+        </motion.div>
+      </motion.div>
+    </>
   )
 }
