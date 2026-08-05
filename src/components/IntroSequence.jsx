@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import loginGif from '../assets/login_GIF.gif'
 import logoImg from '../assets/elsewedy-logo.png'
 
-export default function IntroSequence({ onComplete, duration = 3000 }) {
+export default function IntroSequence({ onComplete, duration = 5000 }) {
   const timerRef = useRef(null)
 
   useEffect(() => {
@@ -21,116 +22,110 @@ export default function IntroSequence({ onComplete, duration = 3000 }) {
       initial={{ opacity: 1 }}
       exit={{
         opacity: 0,
-        scale: 1.04,
-        filter: 'blur(12px)',
-        transition: { duration: 0.55, ease: [0.4, 0, 0.2, 1] },
+        transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
       }}
       style={{
         position: 'fixed',
         inset: 0,
-        background: '#080809',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
         zIndex: 9999,
+        background: '#080809',
+        overflow: 'hidden',
         cursor: 'pointer',
       }}
       onClick={skip}
-      aria-label="Brand intro — click to skip"
+      aria-label="Intro — click to skip"
     >
+      <img
+        src={loginGif}
+        alt="Elsewedy Electrometer intro"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block',
+        }}
+      />
+
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          background:
-            'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(200,16,46,0.10) 0%, transparent 70%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.4) 100%)',
           pointerEvents: 'none',
         }}
       />
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.92 }}
-        animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] } }}
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
         style={{
-          width: 'clamp(240px, 45vw, 480px)',
-          aspectRatio: '16 / 9',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          position: 'relative',
-          background: 'linear-gradient(135deg, #1A1A22 0%, #111115 100%)',
-          border: '1px solid rgba(200,16,46,0.25)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          gap: '12px',
+          position: 'absolute',
+          top: '28px',
+          left: '28px',
         }}
       >
-        <LogoPlaceholder animated />
-        <span
+        <img
+          src={logoImg}
+          alt="Elsewedy Electrometer"
           style={{
-            color: 'rgba(255,255,255,0.3)',
-            fontSize: '11px',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            fontWeight: 600,
+            height: '60px',
+            width: 'auto',
+            display: 'block',
+            filter: 'brightness(1.5) drop-shadow(0 2px 8px rgba(0,0,0,0.5))',
           }}
-        >
-          Brand GIF goes here
-        </span>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.2, ease: [0.4, 0, 0.2, 1] } }}
-        style={{ marginTop: '32px', textAlign: 'center' }}
-      >
-        <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '22px', fontWeight: 700, letterSpacing: '-0.01em' }}>
-          Elsewedy Electrometer
-        </p>
-        <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '13px', marginTop: '6px', letterSpacing: '0.06em' }}>
-          CAS Portal
-        </p>
+        />
       </motion.div>
 
       <motion.div
         initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1, transition: { duration: duration / 1000, ease: 'linear' } }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: duration / 1000, ease: 'linear' }}
         style={{
           position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
-          height: '2px',
-          background: 'var(--brand-red)',
+          height: '3px',
+          background: '#C8102E',
           transformOrigin: 'left',
         }}
       />
 
       <motion.button
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.8, duration: 0.4 } }}
-        whileHover={{ opacity: 1 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.4 }}
         onClick={(e) => { e.stopPropagation(); skip() }}
         style={{
           position: 'absolute',
-          bottom: '24px',
-          right: '24px',
-          background: 'none',
-          border: 'none',
-          color: 'rgba(255,255,255,0.35)',
+          bottom: '28px',
+          right: '28px',
+          background: 'rgba(0,0,0,0.45)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255,255,255,0.18)',
+          borderRadius: '50px',
+          color: 'rgba(255,255,255,0.85)',
           fontSize: '12px',
           fontFamily: 'inherit',
-          fontWeight: 500,
+          fontWeight: 600,
           letterSpacing: '0.08em',
           textTransform: 'uppercase',
           cursor: 'pointer',
-          padding: '8px 12px',
-          transition: 'color 0.2s',
+          padding: '9px 18px',
+          transition: 'background 0.2s, color 0.2s',
         }}
-        onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.75)'}
-        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.35)'}
+        onMouseEnter={e => {
+          e.currentTarget.style.background = 'rgba(200,16,46,0.75)'
+          e.currentTarget.style.borderColor = 'rgba(200,16,46,0.5)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.background = 'rgba(0,0,0,0.45)'
+          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'
+        }}
       >
         Skip →
       </motion.button>
@@ -138,18 +133,12 @@ export default function IntroSequence({ onComplete, duration = 3000 }) {
   )
 }
 
-function LogoPlaceholder({ animated = false }) {
+export function LogoPlaceholder({ animated = false }) {
   return (
     <motion.div
       animate={animated ? { scale: [1, 1.05, 1] } : {}}
       transition={animated ? { duration: 2, repeat: Infinity, ease: 'easeInOut' } : {}}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexShrink: 0,
-        padding: '16px',
-      }}
+      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: '16px' }}
     >
       <img
         src={logoImg}
@@ -166,5 +155,3 @@ function LogoPlaceholder({ animated = false }) {
     </motion.div>
   )
 }
-
-export { LogoPlaceholder }
